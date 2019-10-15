@@ -171,8 +171,10 @@ func coverRow(e *element) {
 	e.row.covered = true
 	e = e.right
 	e.up.down, e.down.up = e.down, e.up
+	e.header.size--
 	for r := e.right; r != e; r = r.right {
 		r.up.down, r.down.up = r.down, r.up
+		r.header.size--
 	}
 }
 
@@ -180,8 +182,10 @@ func uncoverRow(e *element) {
 	e.row.covered = false
 	e = e.left
 	e.up.down, e.down.up = e, e
+	e.header.size++
 	for r := e.left; r != e; r = r.left {
 		r.up.down, r.down.up = r, r
+		r.header.size++
 	}
 }
 
