@@ -145,6 +145,35 @@ func ForEachSolution(dlx *Matrix, f func([]int)) {
 	}
 }
 
+func FirstSolution(dlx *Matrix) []int {
+	if dlx.root.left == &dlx.root {
+		return dlx.solution.values[:dlx.solution.stackptr]
+	}
+	header, emptyColumn := colPolicy(dlx)
+	if emptyColumn {
+		return nil
+	}
+	for r := header.down; r != header; r = r.down {
+		dlx.solution.push(r.row.index)
+		coverRow(r)
+		coverColumn(r.header)
+		for j := r.right; j != r; j = j.right {
+			coverColumn(j.header)
+		}
+		result := FirstSolution(dlx)
+		for j := r.left; j != r; j = j.left {
+			uncoverColumn(j.header)
+		}
+		uncoverColumn(r.header)
+		uncoverRow(r)
+		dlx.solution.pop()
+		if result != nil {
+			return result
+		}
+	}
+	return nil
+}
+
 func newSolution() solution {
 	return solution{
 		values:   make([]int, 0),
