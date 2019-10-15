@@ -1,0 +1,320 @@
+<!-- Yes, it's quite ugly, but it gets the job done and is not hard to understand. -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sudoku Solver</title>
+        <meta charset="UTF-8">
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            main {
+                height: 358px;
+                display: flex;
+                flex-wrap: nowrap;
+            }
+
+            input[type=button]#solveButton {
+                margin: 164.5px 10px;
+            }
+
+            .sudoku input[type=text], .sudoku p.result {
+                width: 30px;
+                height: 30px;
+                border: none;
+                text-align: center;
+            }
+
+            .sudoku p.result {
+                line-height: 30px;
+                vertical-align: middle;
+            }
+            
+            .sudoku td {
+                background: white;
+                border: 1px solid black;
+                border-radius: 3px;
+                padding: 3px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <div id="unsolved">
+                <table class="sudoku">
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                        <td><input class="textbox" type="text" maxlength="1"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                <input id="solveButton" type="button" value="Solve"/>
+            </div>
+
+            <div id="solved">
+                <table class="sudoku">
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                        <td><p class="result"></p></td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+        <script>
+
+            let inputs = document.getElementsByClassName("textbox");
+            let outputs = document.getElementsByClassName("result");
+
+            function requestSolution(sudokuString) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", "/solve?sudoku=" + sudokuString);
+                xhr.send();
+                xhr.onload = function() {
+                    if (xhr.status != 200) {
+                        alert("Error ${xhr.status}: ${xhr.statusText}")
+                    } else {
+                        displayResponse(xhr.responseText);
+                    }
+                }
+                xhr.onerror = function() {
+                    alert("Request failed");
+                };
+            }
+
+            function displayResponse(response) {
+                let json = JSON.parse(response);
+                if (json.FoundSolution == false) {
+                    alert("Couldn't find a solution.");
+                    return
+                }
+                for (let i = 0; i < outputs.length; i++) {
+                    outputs[i].innerHTML = json.Solved[i];
+                    if (json.Unsolved[i] == '0') {
+                        outputs[i].style.color = "555555";
+                    } else {
+                        outputs[i].style.color = "#5555ff";
+                    }
+                }
+            }
+
+            // Validation done client side with javascript
+            function solve() {
+                let sudokuString = "";
+                let valid = true;
+                for (let i = 0; i < inputs.length; i++) {
+                    let value = Number(inputs[i].value)
+                    if (isNaN(value) || value < 0 || value > 9) {
+                        inputs[i].value = "";
+                        valid = false;
+                    }
+                    sudokuString += value
+                }
+                if (!valid) {
+                    alert("Inputs must be a numbers 0-9");
+                } else {
+                    requestSolution(sudokuString);
+                }
+            }
+
+            document.getElementById("solveButton").addEventListener("click", solve, false);
+        </script>
+    </body>
+</html>
