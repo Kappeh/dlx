@@ -2,6 +2,11 @@ package dlx
 
 import "errors"
 
+/*
+Matrix is a matrix containing only 1s and 0s.
+This datastructure is specifically designed to reduce
+the overhead of row/column delete/undo operations.
+*/
 type Matrix struct {
 	root             element
 	headers, details []element

@@ -4,6 +4,11 @@ import (
 	"errors"
 )
 
+/*
+New constructs a new matrix.
+primary 	- The amount of primary columns to be in the matrix.
+optional 	- The amount of optional columns to be in the matrix.
+*/
 func New(primary, optional int) (*Matrix, error) {
 	if primary <= 0 {
 		return nil, errors.New("primary must be positive")
@@ -50,6 +55,11 @@ func New(primary, optional int) (*Matrix, error) {
 	return &result, nil
 }
 
+/*
+AddRow adds a new row of elements to a matrix.
+dlx 	- The matrix to add the row to.
+indexes - The indices of the columns containing 1s.
+*/
 func AddRow(dlx *Matrix, indexes ...int) error {
 	count := len(indexes)
 	if count == 0 {
@@ -90,6 +100,11 @@ func AddRow(dlx *Matrix, indexes ...int) error {
 	return nil
 }
 
+/*
+AddToSolution adds a row explicitly to the solution for a matrix.
+dlx		- The matrix which contains the row.
+index	- The index of the row.
+*/
 func AddToSolution(dlx *Matrix, index int) error {
 	if index < 0 || index >= dlx.rowCount {
 		return errors.New("index out of range")
@@ -107,6 +122,11 @@ func AddToSolution(dlx *Matrix, index int) error {
 	return nil
 }
 
+/*
+ClearSolution removes all rows from the current solution for a matrix.
+This function undoes any calls to AddToSolution.
+dlx - The matrix to clear the solution for.
+*/
 func ClearSolution(dlx *Matrix) {
 	for dlx.solution.size() > 0 {
 		index, _ := dlx.solution.pop()
@@ -119,6 +139,12 @@ func ClearSolution(dlx *Matrix) {
 	}
 }
 
+/*
+ForEachSolution calls f with a slice of all row indexes which correspond
+to a solution for a matrix.
+dlx	- The matrix to find solutions for.
+f	- The function to be called when a solution is found.
+*/
 func ForEachSolution(dlx *Matrix, f func([]int)) {
 	if dlx.root.left == &dlx.root {
 		f(dlx.solution.values[:dlx.solution.stackptr])
@@ -145,6 +171,10 @@ func ForEachSolution(dlx *Matrix, f func([]int)) {
 	}
 }
 
+/*
+FirstSolution finds a solution for a matrix and returns the row indexes.
+dlx	- The matrix to find a solution for.
+*/
 func FirstSolution(dlx *Matrix) []int {
 	if dlx.root.left == &dlx.root {
 		return dlx.solution.values[:dlx.solution.stackptr]
