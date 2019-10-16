@@ -21,7 +21,7 @@ $ go get github.com/Kappeh/dlx
 
 Here is a very simple example which shows how to utilise the package to construct the following matrix and solve for the subcollection of rows which collectively contain a single 1 in each column.
 
-<img src="exampleMatrix.png" width="200px">
+<img src="examples/exactCover/exampleMatrix.png" width="200px">
 
 This particular example can be found [here][example0].
 
@@ -64,10 +64,10 @@ func main() {
 	count := 0
 
 	// For each solution
-	dlx.ForEachSolution(s, func(s []int) {
+	dlx.ForEachSolution(s, func(rows []int) {
 		// Covert the row indexes to letters
-		letters := make([]string, len(s))
-		for i, v := range s {
+		letters := make([]string, len(rows))
+		for i, v := range rows {
 			letters[i] = string("ABCDEF"[v])
 		}
 		// Combine them in set notation for printing

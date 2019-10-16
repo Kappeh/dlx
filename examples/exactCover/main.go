@@ -1,40 +1,8 @@
-/*
-Information of the exact cover problem can be found at:
-https://en.wikipedia.org/wiki/Exact_cover
-
-The following example will show how to use the dlx package
-to solve the exact cover problem for the following:
-
-Let S = {A, B, C, D, E, F} be a collection of subsets of a
-set X = {1, 2, 3, 4, 5, 6, 7} such that:
-A = {1, 4, 7}
-B = {1, 4}
-C = {4, 5, 7}
-D = {3, 5, 6}
-E = {2, 3, 6, 7}
-F = {2, 7}
-
-This can also be represented as the following matrix:
-
-	    1 2 3 4 5 6 7
-
-	A   1 0 0 1 0 0 1
-	B   1 0 0 1 0 0 0
-	C   0 0 0 1 1 0 1
-	D   0 0 1 0 1 1 0
-	E   0 1 1 0 0 1 1
-	F   0 1 0 0 0 0 1
-
-The subcollection S* = {B, D, F} is the only exact cover
-in this case. Our aim is to use the dlx package to
-arrive at this conclusion programatically.
-*/
-
 package main
 
 import (
-	"log"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/Kappeh/dlx"
@@ -67,10 +35,10 @@ func main() {
 	count := 0
 
 	// For each solution
-	dlx.ForEachSolution(s, func(s []int) {
+	dlx.ForEachSolution(s, func(rows []int) {
 		// Covert the row indexes to letters
-		letters := make([]string, len(s))
-		for i, v := range s {
+		letters := make([]string, len(rows))
+		for i, v := range rows {
 			letters[i] = string("ABCDEF"[v])
 		}
 		// Combine them in set notation for printing
