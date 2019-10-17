@@ -19,18 +19,12 @@ func main() {
 	s, err := dlx.New(7, 0)
 	handleErr(err)
 
-	// Row0 <- A = {1, 4, 7}
-	handleErr(dlx.AddRow(s, 0, 3, 6))
-	// Row1 <- B = {1, 4}
-	handleErr(dlx.AddRow(s, 0, 3))
-	// Row2 <- C = {4, 5, 7}
-	handleErr(dlx.AddRow(s, 3, 4, 6))
-	// Row3 <- D = {3, 5, 7}
-	handleErr(dlx.AddRow(s, 2, 4, 5))
-	// Row4 <- E = {2, 3, 6, 7}
-	handleErr(dlx.AddRow(s, 1, 2, 5, 6))
-	// Row5 <- F = {2, 7}
-	handleErr(dlx.AddRow(s, 1, 6))
+	handleErr(dlx.AddRow(s, 0, 3, 6))    // Row0 <- A = {1, 4, 7}
+	handleErr(dlx.AddRow(s, 0, 3))       // Row1 <- B = {1, 4}
+	handleErr(dlx.AddRow(s, 3, 4, 6))    // Row2 <- C = {4, 5, 7}
+	handleErr(dlx.AddRow(s, 2, 4, 5))    // Row3 <- D = {3, 5, 7}
+	handleErr(dlx.AddRow(s, 1, 2, 5, 6)) // Row4 <- E = {2, 3, 6, 7}
+	handleErr(dlx.AddRow(s, 1, 6))       // Row5 <- F = {2, 7}
 
 	count := 0
 
